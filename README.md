@@ -9,7 +9,8 @@ But if you don't have them, the install script will install them for you.
 Tested on Proxmox 7.X and Proxmox 8.X.
 ## Install 
 
-Log in to a Proxmox Server via SSH, and then run: `curl https://raw.githubusercontent.com/ggMartinez/Proxmox-Cloud-Image-Importer/main/install.sh| bash`
+Log in to a Proxmox Server via SSH, and then run: 
+`curl https://raw.githubusercontent.com/ggMartinez/Proxmox-Cloud-Image-Importer/main/install.sh| bash`
 
 And then run `cloud-import`
  

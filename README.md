@@ -6,6 +6,8 @@ This script requires `python3-pip`, `git`, and the Python Package [Simpe term me
 
 But if you don't have them, the install script will install them for you.
 
+Also, you'll need to have APT Repositories configured and working. 
+
 Tested on Proxmox 7.X and Proxmox 8.X.
 ## Install 
 

@@ -29,7 +29,7 @@ pip3 install -r requirements.txt
 
 
 echo "Creating symlink"
-ln -s $outputDirectory/cloud-import.py /usr/bin/cloud-import 
+ln -s $outputDirectory/cloud-import.py /usr/bin/cloud-import && chmod +x $outputDirectory/cloud-import.py
 
 
 echo "Installed!! Run with 'cloud-import'"

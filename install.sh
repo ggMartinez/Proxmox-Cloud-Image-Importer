@@ -2,6 +2,7 @@
 
 set -e
 
+proxmoxVersion=$(pveversion --verbose| grep proxmox-ve| cut -d" " -f2| cut -d"." -f1 )
 currentDirectory=$(pwd)
 outputDirectory="/opt/Proxmox-Cloud-Image-Importer"
 
@@ -25,7 +26,14 @@ git clone https://github.com/ggMartinez/Proxmox-Cloud-Image-Importer $outputDire
 
 
 echo "Installing requirements"
-pip3 install -r requirements.txt
+if [  $proxmoxVersion = "7"]
+then 
+    pip3 install -r requirements.txt
+fi 
+if [ $proxmoxVersion = "8"]
+then 
+    pip3 install -r requirements.txt  --break-system-packages
+fi
 
 
 echo "Creating symlink"

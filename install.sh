@@ -7,40 +7,40 @@ currentDirectory=$(pwd)
 outputDirectory="/opt/Proxmox-Cloud-Image-Importer"
 
 if ! [ -x "$(command -v git)" ]; then
-    echo "Installing Git..." 
+    echo "Installing Git... \n\n"
     sudo apt-get install git -y
-else 
-    echo "Git is already installed. Skipping... "
+else
+    echo "Git is already installed. Skipping... \n\n"
 fi
 
 
 if ! [ -x "$(command -v pip3)" ]; then
-    echo "Installing Python3 Pip..." 
+    echo "Installing Python3 Pip... \n\n"
     sudo apt-get install python3-pip -y
-else 
-    echo "Python3 Pip is already installed. Skipping... "
+else
+    echo "Python3 Pip is already installed. Skipping... \n\n"
 fi
 
-echo "Downloading importer"
+echo "Downloading importer... \n\n"
 git clone https://github.com/ggMartinez/Proxmox-Cloud-Image-Importer $outputDirectory && cd $outputDirectory
 
 
-echo "Installing requirements"
+echo "Installing requirements\n\n"
 if [  "$proxmoxVersion" = "7" ]
-then 
+then
     pip3 install -r requirements.txt
-fi 
+fi
 if [ "$proxmoxVersion" = "8" ]
-then 
+then
     pip3 install -r requirements.txt  --break-system-packages
 fi
 
 
-echo "Creating symlink"
+echo "Creating symlink in /usr/bin/cloud-import... \n\n"
 ln -s $outputDirectory/cloud-import.py /usr/bin/cloud-import && chmod +x $outputDirectory/cloud-import.py
 
 
-echo "Installed!! Run with 'cloud-import'"
-echo "If you want to update, run \"cd $outputDirectory && git pull\"."
+echo "Installed!! Run with 'cloud-import' \n"
+echo "If you want to update, run \"cd $outputDirectory && git pull\".\n\n"
 
 cd $currentDirectory

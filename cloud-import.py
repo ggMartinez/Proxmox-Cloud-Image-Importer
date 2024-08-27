@@ -25,7 +25,7 @@ def importTemplate(name, storage, id):
     file = f"/tmp/{file}"
     print(f"Importing {file} to {storage} with id {id}")
     templateName = os.path.basename(file).split(".")[0]
-    os.popen(f'qm create {id} --memory 2048 --net0 virtio,bridge=vmbr0 --scsihw virtio-scsi-pci  --name "{templateName}" --tag temlate').read()
+    os.popen(f'qm create {id} --memory 2048 --net0 virtio,bridge=vmbr0 --scsihw virtio-scsi-pci  --name "{templateName}" --tag template').read()
     os.popen(f'qm set {id} --scsi0 {storage}:0,import-from={file}').read()
     os.popen(f'qm set {id} --ide2 {storage}:cloudinit').read()
     os.popen(f'qm set {id} --boot order=scsi0').read()

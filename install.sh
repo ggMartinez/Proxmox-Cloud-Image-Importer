@@ -22,7 +22,8 @@ else
 fi
 
 echo "Downloading importer... \n\n"
-git clone https://github.com/ggMartinez/Proxmox-Cloud-Image-Importer $outputDirectory && cd $outputDirectory
+git clone https://github.com/ggMartinez/Proxmox-Cloud-Image-Importer $outputDirectory && cd $outputDirectory && git config core.fileMode false
+
 
 
 echo "Installing requirements\n\n"

@@ -7,7 +7,7 @@ import requests
 from simple_term_menu import TerminalMenu
 
 def getImagesList():
-    ImagesURL="https://gist.githubusercontent.com/ggMartinez/f20f83d6a7630ab49d782abfe9017bc5/raw/3fb857a37b413403322e21469e155922bbac7d0c/sources.json"
+    ImagesURL="https://gist.githubusercontent.com/ggMartinez/f20f83d6a7630ab49d782abfe9017bc5/raw/sources.json"
     return requests.get(ImagesURL).json()
 
 def getStorage():

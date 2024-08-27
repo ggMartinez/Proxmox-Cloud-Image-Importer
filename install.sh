@@ -26,11 +26,11 @@ git clone https://github.com/ggMartinez/Proxmox-Cloud-Image-Importer $outputDire
 
 
 echo "Installing requirements"
-if [  $proxmoxVersion = "7"]
+if [  "$proxmoxVersion" = "7"]
 then 
     pip3 install -r requirements.txt
 fi 
-if [ $proxmoxVersion = "8"]
+if [ "$proxmoxVersion" = "8"]
 then 
     pip3 install -r requirements.txt  --break-system-packages
 fi

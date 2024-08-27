@@ -36,8 +36,8 @@ then
 fi
 
 
-echo "Creating symlink in /usr/bin/cloud-import... \n\n"
-ln -s $outputDirectory/cloud-import.py /usr/bin/cloud-import && chmod +x $outputDirectory/cloud-import.py
+echo "Creating symlink in /usr/local/bin/cloud-import... \n\n"
+ln -s $outputDirectory/cloud-import.py /usr/bin/local/cloud-import && chmod +x $outputDirectory/cloud-import.py
 
 
 echo "Installed!! Run with 'cloud-import' \n"

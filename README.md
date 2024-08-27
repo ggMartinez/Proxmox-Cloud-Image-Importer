@@ -11,7 +11,7 @@ Tested on Proxmox 7.X and Proxmox 8.X.
 
 Log in to a Proxmox Server via SSH, and then run: 
 ```bash
-curl 'https://raw.githubusercontent.com/ggMartinez/Proxmox-Cloud-Image-Importer/main/install.sh'| bash
+curl 'https://raw.githubusercontent.com/ggMartinez/Proxmox-Cloud-Image-Importer/main/install.sh' | bash
 ```
 
 And then run `cloud-import`

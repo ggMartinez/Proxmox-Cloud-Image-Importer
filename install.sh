@@ -8,7 +8,7 @@ outputDirectory="/opt/Proxmox-Cloud-Image-Importer"
 
 if ! [ -x "$(command -v git)" ]; then
     echo "Installing Git... \n\n"
-    sudo apt-get install git -y
+    apt-get install git -y
 else
     echo "Git is already installed. Skipping... \n\n"
 fi
@@ -16,7 +16,7 @@ fi
 
 if ! [ -x "$(command -v pip3)" ]; then
     echo "Installing Python3 Pip... \n\n"
-    sudo apt-get install python3-pip -y
+     apt-get install python3-pip -y
 else
     echo "Python3 Pip is already installed. Skipping... \n\n"
 fi

@@ -17,7 +17,7 @@ def getId():
     id = 20000
     output = os.popen('qm list').read()
     if str(id) in output:
-        id = int(os.popen('echo $(qm list | tail -| tr -s " " | cut -d " " -f2 | tail -1)').read()) + 1
+        id = int(os.popen('echo $(pvesh get /cluster/resources --type vm --output-format=text --noborder 1 --noheader 1 | awk \'{split($1, id, "/"); print id[2]}\' | sort -n | tail -n1)').read()) + 1
     return id
 
 def importTemplate(name, storage, id):

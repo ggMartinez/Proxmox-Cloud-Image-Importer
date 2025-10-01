@@ -2,46 +2,69 @@
 
 set -e
 
-proxmoxVersion=$(pveversion --verbose| grep proxmox-ve| cut -d" " -f2| cut -d"." -f1 )
+# Detectar versión principal de Proxmox (7, 8 o 9)
+proxmoxVersion=$(pveversion --verbose | grep proxmox-ve | awk '{print $2}' | cut -d"." -f1)
 currentDirectory=$(pwd)
 outputDirectory="/opt/Proxmox-Cloud-Image-Importer"
+binaryLink="/usr/local/bin/cloud-import"
 
-if ! [ -x "$(command -v git)" ]; then
-    echo "Installing Git... \n\n"
-    apt-get install git -y
+echo
+echo "=== Proxmox Cloud Image Importer Installer ==="
+echo
+
+# Verificar e instalar Git
+if ! command -v git >/dev/null 2>&1; then
+    echo "🔧 Installing Git..."
+    apt-get update && apt-get install git -y
 else
-    echo "Git is already installed. Skipping... \n\n"
+    echo "✅ Git is already installed. Skipping..."
 fi
 
-
-if ! [ -x "$(command -v pip3)" ]; then
-    echo "Installing Python3 Pip... \n\n"
-     apt-get install python3-pip -y
+# Verificar e instalar pip3
+if ! command -v pip3 >/dev/null 2>&1; then
+    echo "🔧 Installing Python3 pip..."
+    apt-get install python3-pip -y
 else
-    echo "Python3 Pip is already installed. Skipping... \n\n"
+    echo "✅ Python3 pip is already installed. Skipping..."
 fi
 
-echo "Downloading importer... \n\n"
-git clone https://github.com/ggMartinez/Proxmox-Cloud-Image-Importer $outputDirectory && cd $outputDirectory && git config core.fileMode false
-
-
-
-echo "Installing requirements\n\n"
-if [  "$proxmoxVersion" = "7" ]
-then
-    pip3 install -r requirements.txt
-fi
-if [ "$proxmoxVersion" = "8" ]
-then
-    pip3 install -r requirements.txt  --break-system-packages
+echo
+echo "📥 Downloading importer from GitHub..."
+if [ -d "$outputDirectory" ]; then
+    echo "⚠️  Directory $outputDirectory already exists. Pulling latest changes..."
+    cd "$outputDirectory" && git pull
+else
+    git clone https://github.com/ggMartinez/Proxmox-Cloud-Image-Importer "$outputDirectory"
+    cd "$outputDirectory" && git config core.fileMode false
 fi
 
+echo
+echo "📦 Installing Python requirements..."
+cd "$outputDirectory"
+if [ "$proxmoxVersion" = "7" ]; then
+    python3 -m pip install -r requirements.txt
+elif [ "$proxmoxVersion" = "8" ] || [ "$proxmoxVersion" = "9" ]; then
+    python3 -m pip install -r requirements.txt --break-system-packages
+else
+    echo "❌ Unsupported Proxmox version: $proxmoxVersion"
+    exit 1
+fi
 
-echo "Creating symlink in /usr/local/bin/cloud-import... \n\n"
-ln -s $outputDirectory/cloud-import.py /usr/local/bin/cloud-import && chmod +x $outputDirectory/cloud-import.py
+echo
+echo "🔗 Creating symlink in /usr/local/bin..."
+if [ -L "$binaryLink" ]; then
+    echo "ℹ️  Symlink already exists. Skipping..."
+else
+    ln -s "$outputDirectory/cloud-import.py" "$binaryLink"
+    chmod +x "$outputDirectory/cloud-import.py"
+    echo "✅ Symlink created at $binaryLink"
+fi
 
+echo
+echo "✅ Installed successfully!"
+echo "➡️  Run with: cloud-import"
+echo "➡️  To update in the future: cd $outputDirectory && git pull"
+echo
 
-echo "Installed!! Run with 'cloud-import' \n"
-echo "If you want to update, run \"cd $outputDirectory && git pull\".\n\n"
+cd "$currentDirectory"
 
-cd $currentDirectory
